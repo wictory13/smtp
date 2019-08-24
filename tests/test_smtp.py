@@ -158,7 +158,7 @@ class TestSmtp(unittest.TestCase):
         sender = smtp.Smtp('', 10, '', '', '', '', '', '', '')
         p_recv.return_value = b'552-not ok\r\n'
         with self.assertRaisesRegex(
-                smtp.SmtpException, 'Невозможно отправить данные'):
+                smtp.SmtpException, b'552-not ok\r\n'.decode()):
             sender.send_data('aa', 'aaaa', '')
 
     @patch('smtp.socket.socket.sendall')
